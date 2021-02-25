@@ -18,11 +18,13 @@ import java.util.Objects;
 @Getter
 @Setter
 public class User {
-
+    /**
+    * Entity User class. It stores the values here.
+    * */
     private long id;
     private String firstName;
     private String lastName;
-    private Role role;
+    private String role;
     private String phoneNumber;
     private String email;
     private String password;
@@ -35,7 +37,7 @@ public class User {
         return id == user.id &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                role == user.role &&
+                Objects.equals(role, user.role) &&
                 Objects.equals(phoneNumber, user.phoneNumber) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password);

@@ -14,7 +14,7 @@ public interface AbstractCrudOperation <T> {
 
     T update (T t);
 
-    void delete ();
+    void delete (Long id);
 
     List<T> getAll();
 

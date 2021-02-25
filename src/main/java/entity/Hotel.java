@@ -23,7 +23,7 @@ public class Hotel {
     private int rating;
     private String country;
     private String city;
-    private PropertyType propertyType;
+    private String propertyType;
     private int roomCount;
     private int agencyId;
 
@@ -38,11 +38,12 @@ public class Hotel {
                 agencyId == hotel.agencyId &&
                 Objects.equals(name, hotel.name) &&
                 Objects.equals(country, hotel.country) &&
-                Objects.equals(city, hotel.city);
+                Objects.equals(city, hotel.city) &&
+                Objects.equals(propertyType, hotel.propertyType);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, country, city, roomCount, agencyId);
+        return Objects.hash(id, name, rating, country, city, propertyType, roomCount, agencyId);
     }
 }
