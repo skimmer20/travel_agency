@@ -27,6 +27,16 @@ public class Hotel {
     private int roomCount;
     private int agencyId;
 
+    public Hotel(long id, String name, int rating, String country, String city, String propertyType, int roomCount) {
+        this.id = id;
+        this.name = name;
+        this.rating = rating;
+        this.country = country;
+        this.city = city;
+        this.propertyType = propertyType;
+        this.roomCount = roomCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
