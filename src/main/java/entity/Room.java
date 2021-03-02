@@ -19,11 +19,20 @@ import java.util.Objects;
 public class Room {
 
     private Long id;
-    private RoomType roomType;
+    private String roomType;
     private boolean isWifi;
     private boolean isBreakfast;
     private double price;
     private Integer hotelId;
+
+    public Room(Long id, String roomType, boolean isWifi, boolean isBreakfast, double price, Integer hotelId) {
+        this.id = id;
+        this.roomType = roomType;
+        this.isWifi = isWifi;
+        this.isBreakfast = isBreakfast;
+        this.price = price;
+        this.hotelId = hotelId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,7 +43,7 @@ public class Room {
                 isBreakfast == room.isBreakfast &&
                 Double.compare(room.price, price) == 0 &&
                 Objects.equals(id, room.id) &&
-                roomType == room.roomType &&
+                Objects.equals(roomType, room.roomType) &&
                 Objects.equals(hotelId, room.hotelId);
     }
 

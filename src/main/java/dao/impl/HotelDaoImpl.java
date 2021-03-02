@@ -4,12 +4,12 @@ import connect.ConnectionManager;
 import dao.HotelDao;
 import entity.Hotel;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,6 +72,7 @@ public class HotelDaoImpl implements HotelDao {
                 String propertyType = resultSet.getString("property_type");
                 int roomCount = resultSet.getInt("room_count");
                 hotel = new Hotel(hotelId, name, rating, country, city, propertyType, roomCount);
+                preparedStatement.executeUpdate();
             }
             ConnectionManager.closeConnection();
         } catch (SQLException e) {
@@ -187,11 +188,11 @@ public class HotelDaoImpl implements HotelDao {
     public List<Hotel> getHotelByCityAndDate(String city, Date fromDate, Date toDate) {
         List<Hotel> hotelList = new ArrayList<>();
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_CITY_AND_DATE)) {
-            preparedStatement.setDate(1, (java.sql.Date) fromDate);
-            preparedStatement.setDate(2, (java.sql.Date) toDate);
+            preparedStatement.setDate(1, fromDate);
+            preparedStatement.setDate(2, toDate);
             preparedStatement.setString(3, city);
-            preparedStatement.setDate(4, (java.sql.Date) fromDate);
-            preparedStatement.setDate(5, (java.sql.Date) toDate);
+            preparedStatement.setDate(4, fromDate);
+            preparedStatement.setDate(5, toDate);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     long hotelId = resultSet.getLong("id");

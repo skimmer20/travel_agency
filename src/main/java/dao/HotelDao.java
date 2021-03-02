@@ -3,8 +3,9 @@ package dao;
 import abstr.AbstractCrudOperation;
 import entity.Hotel;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
+
 
 /**
  * @author yuriismac on 2/24/21.
