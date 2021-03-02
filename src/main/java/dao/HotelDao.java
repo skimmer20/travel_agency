@@ -15,7 +15,7 @@ public interface HotelDao extends AbstractCrudOperation<Hotel> {
 
     List<Hotel> getByCountryAndCity(String country, String city);
 
-    List<Hotel> getHotelByDate(Long id, Date date);
+    List<Hotel> getHotelByDate(Integer id, Date date);
 
     List<Hotel> getHotelByCityAndDate(String city, Date fromDate, Date toDate);
 }

@@ -13,13 +13,13 @@ import java.util.Map;
  */
 public interface RoomDao extends AbstractCrudOperation<Room> {
 
-    List<Room> getRoomsByHotel(Long hotelId);
+    List<Room> getRoomsByHotel(Integer hotelId);
 
-    List<Room> getRoomsByHotelAndDate(Long hotelId, Date fromDate, Date toDate);
+    List<Room> getRoomsByHotelAndDate(Integer hotelId, Date fromDate, Date toDate);
 
-    Map<Long, Long> getRoomUsage(Long hotelId);
+    Map<Integer, Integer> getRoomUsage(Integer hotelId);
 
-    Map<String, Long> getClientCount();
+    Map<String, Integer> getClientCount();
 
 
 }

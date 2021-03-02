@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 public class TravelAgency {
 
-    private Long id;
+    private Integer id;
     private String name;
     private String address;
     private String email;

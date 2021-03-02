@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 while (resultSet.next()) {
-                    user.setId(resultSet.getLong(1));
+                    user.setId(resultSet.getInt(1));
                 }
                 ConnectionManager.closeConnection();
             }
@@ -49,13 +49,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User read(Long id) {
+    public User read(Integer id) {
         User user = null;
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long userId = resultSet.getLong("id");
+                Integer userId = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String role = resultSet.getString("user_role");
@@ -90,9 +90,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             ConnectionManager.closeConnection();
         } catch (SQLException e) {
@@ -106,7 +106,7 @@ public class UserDaoImpl implements UserDao {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)) {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long userId = resultSet.getLong("id");
+                    Integer userId = resultSet.getInt("id");
                     String firstName = resultSet.getString("first_name");
                     String lastName = resultSet.getString("last_name");
                     String role = resultSet.getString("user_role");
@@ -130,7 +130,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long userId = resultSet.getLong("id");
+                Integer userId = resultSet.getInt("id");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String role = resultSet.getString("user_role");

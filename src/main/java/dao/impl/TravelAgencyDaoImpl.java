@@ -34,7 +34,7 @@ public class TravelAgencyDaoImpl implements TravelAgencyDao {
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 while (resultSet.next()) {
-                    travelAgency.setId(resultSet.getLong(1));
+                    travelAgency.setId(resultSet.getInt(1));
                 }
                 ConnectionManager.closeConnection();
             }
@@ -45,12 +45,12 @@ public class TravelAgencyDaoImpl implements TravelAgencyDao {
     }
 
     @Override
-    public TravelAgency read(Long id) {
+    public TravelAgency read(Integer id) {
         TravelAgency travelAgency = null;
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long agencyId = resultSet.getLong("id");
+                Integer agencyId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String address = resultSet.getString("address");
                 String email = resultSet.getString("email");
@@ -78,9 +78,9 @@ public class TravelAgencyDaoImpl implements TravelAgencyDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             ConnectionManager.closeConnection();
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class TravelAgencyDaoImpl implements TravelAgencyDao {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long id = resultSet.getLong("id");
+                Integer id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String address = resultSet.getString("address");
                 String email = resultSet.getString("email");

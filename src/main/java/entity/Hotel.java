@@ -18,7 +18,7 @@ import java.util.Objects;
 @Setter
 public class Hotel {
 
-    private long id;
+    private Integer id;
     private String name;
     private int rating;
     private String country;
@@ -27,7 +27,7 @@ public class Hotel {
     private int roomCount;
     private int agencyId;
 
-    public Hotel(long id, String name, int rating, String country, String city, String propertyType, int roomCount) {
+    public Hotel(Integer id, String name, int rating, String country, String city, String propertyType, int roomCount) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -42,10 +42,10 @@ public class Hotel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hotel hotel = (Hotel) o;
-        return id == hotel.id &&
-                rating == hotel.rating &&
+        return rating == hotel.rating &&
                 roomCount == hotel.roomCount &&
                 agencyId == hotel.agencyId &&
+                Objects.equals(id, hotel.id) &&
                 Objects.equals(name, hotel.name) &&
                 Objects.equals(country, hotel.country) &&
                 Objects.equals(city, hotel.city) &&

@@ -18,14 +18,14 @@ import java.util.Objects;
 @Setter
 public class Room {
 
-    private Long id;
+    private Integer id;
     private String roomType;
     private boolean isWifi;
     private boolean isBreakfast;
     private double price;
     private Integer hotelId;
 
-    public Room(Long id, String roomType, boolean isWifi, boolean isBreakfast, double price, Integer hotelId) {
+    public Room(Integer id, String roomType, boolean isWifi, boolean isBreakfast, double price, Integer hotelId) {
         this.id = id;
         this.roomType = roomType;
         this.isWifi = isWifi;

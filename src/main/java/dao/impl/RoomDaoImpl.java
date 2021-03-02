@@ -50,7 +50,7 @@ public class RoomDaoImpl implements RoomDao {
             preparedStatement.executeUpdate();
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 while (resultSet.next()) {
-                    room.setId(resultSet.getLong(1));
+                    room.setId(resultSet.getInt(1));
                 }
             }
             ConnectionManager.closeConnection();
@@ -61,12 +61,12 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Room read(Long id) {
+    public Room read(Integer id) {
         Room room = null;
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long roomId = resultSet.getLong("id");
+                Integer roomId = resultSet.getInt("id");
                 String roomType = resultSet.getString("room_type");
                 boolean wifi = resultSet.getBoolean("wifi");
                 boolean breakfast = resultSet.getBoolean("breakfast");
@@ -97,9 +97,9 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             ConnectionManager.closeConnection();
         } catch (SQLException e) {
@@ -113,7 +113,7 @@ public class RoomDaoImpl implements RoomDao {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long roomId = resultSet.getLong("id");
+                Integer roomId = resultSet.getInt("id");
                 String roomType = resultSet.getString("room_type");
                 boolean wifi = resultSet.getBoolean("wifi");
                 boolean breakfast = resultSet.getBoolean("breakfast");
@@ -129,13 +129,13 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> getRoomsByHotel(Long hotelId) {
+    public List<Room> getRoomsByHotel(Integer hotelId) {
         List<Room> roomList = new ArrayList<>();
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ROOMS_BY_HOTEL)) {
             preparedStatement.setLong(1, hotelId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long roomId = resultSet.getLong("id");
+                    Integer roomId = resultSet.getInt("id");
                     String roomType = resultSet.getString("room_type");
                     boolean wifi = resultSet.getBoolean("wifi");
                     boolean breakfast = resultSet.getBoolean("breakfast");
@@ -152,7 +152,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> getRoomsByHotelAndDate(Long hotelId, Date fromDate, Date toDate) {
+    public List<Room> getRoomsByHotelAndDate(Integer hotelId, Date fromDate, Date toDate) {
         List<Room> roomList = new ArrayList<>();
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ROOMS_BY_HOTEL_AND_DATE)) {
             preparedStatement.setDate(1, fromDate);
@@ -162,7 +162,7 @@ public class RoomDaoImpl implements RoomDao {
             preparedStatement.setDate(5, toDate);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long roomId = resultSet.getLong("id");
+                    Integer roomId = resultSet.getInt("id");
                     String roomType = resultSet.getString("room_type");
                     boolean wifi = resultSet.getBoolean("wifi");
                     boolean breakfast = resultSet.getBoolean("breakfast");
@@ -179,8 +179,8 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Map<Long, Long> getRoomUsage(Long hotelId) {
-        Map<Long, Long> mapRoomUsage = new HashMap<>();
+    public Map<Integer, Integer> getRoomUsage(Integer hotelId) {////////??????
+        Map<Integer, Integer> mapRoomUsage = new HashMap<>();
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ROOM_USAGE)){
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -191,7 +191,20 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public Map<String, Long> getClientCount() {
-        return null;
+    public Map<String, Integer> getClientCount() {
+        Map<String, Integer> bookedCount = new HashMap<>();
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_CLIENT_COUNT)){
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    String hotelName = resultSet.getString("name");
+                    Integer userId = resultSet.getInt("clientsCount");
+                    bookedCount.put(hotelName, userId);
+                }
+            }
+            ConnectionManager.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookedCount;
     }
 }

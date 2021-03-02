@@ -21,7 +21,7 @@ public class User {
     /**
     * Entity User class. It stores the values here.
     * */
-    private long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String role;
@@ -34,7 +34,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
+        return Objects.equals(id, user.id) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(role, user.role) &&

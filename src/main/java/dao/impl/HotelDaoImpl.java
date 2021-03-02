@@ -39,7 +39,7 @@ public class HotelDaoImpl implements HotelDao {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection()
                 .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, hotel.getName());
-            preparedStatement.setLong(2, hotel.getRating());
+            preparedStatement.setInt(2, hotel.getRating());
             preparedStatement.setString(3, hotel.getCountry());
             preparedStatement.setString(4, hotel.getCity());
             preparedStatement.setString(5, hotel.getPropertyType());
@@ -48,7 +48,7 @@ public class HotelDaoImpl implements HotelDao {
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 while (resultSet.next()) {
-                    hotel.setId(resultSet.getLong(1));
+                    hotel.setId(resultSet.getInt(1));
                 }
                 ConnectionManager.closeConnection();
             }
@@ -59,12 +59,12 @@ public class HotelDaoImpl implements HotelDao {
     }
 
     @Override
-    public Hotel read(Long id) {
+    public Hotel read(Integer id) {
         Hotel hotel = null;
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long hotelId = resultSet.getLong("id");
+                Integer hotelId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int rating = resultSet.getInt("rating");
                 String country = resultSet.getString("country");
@@ -99,9 +99,9 @@ public class HotelDaoImpl implements HotelDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             ConnectionManager.closeConnection();
         } catch (SQLException e) {
@@ -115,7 +115,7 @@ public class HotelDaoImpl implements HotelDao {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                long hotelId = resultSet.getLong("id");
+                Integer hotelId = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int rating = resultSet.getInt("rating");
                 String country = resultSet.getString("country");
@@ -140,7 +140,7 @@ public class HotelDaoImpl implements HotelDao {
             preparedStatement.setString(2, city);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long hotelId = resultSet.getLong("id");
+                    Integer hotelId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     int rating = resultSet.getInt("rating");
                     String countryL = resultSet.getString("country");
@@ -159,14 +159,14 @@ public class HotelDaoImpl implements HotelDao {
     }
 
     @Override
-    public List<Hotel> getHotelByDate(Long id, Date date) {
+    public List<Hotel> getHotelByDate(Integer id, Date date) {
         List<Hotel> hotelList = new ArrayList<>();
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_DATE)) {
-            preparedStatement.setDate(1, (java.sql.Date) date);
-            preparedStatement.setLong(2, id);
+            preparedStatement.setDate(1, date);
+            preparedStatement.setInt(2, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long hotelId = resultSet.getLong("id");
+                    Integer hotelId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     int rating = resultSet.getInt("rating");
                     String country = resultSet.getString("country");
@@ -195,7 +195,7 @@ public class HotelDaoImpl implements HotelDao {
             preparedStatement.setDate(5, toDate);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    long hotelId = resultSet.getLong("id");
+                    Integer hotelId = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     int rating = resultSet.getInt("rating");
                     String country = resultSet.getString("country");

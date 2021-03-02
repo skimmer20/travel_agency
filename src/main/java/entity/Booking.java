@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 /**
@@ -19,7 +18,7 @@ import java.util.Objects;
 @Setter
 public class Booking {
 
-    private long id;
+    private Integer id;
     private Date date;
     private Integer roomId;
     private Integer userId;
@@ -29,7 +28,7 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return id == booking.id &&
+        return Objects.equals(id, booking.id) &&
                 Objects.equals(date, booking.date) &&
                 Objects.equals(roomId, booking.roomId) &&
                 Objects.equals(userId, booking.userId);

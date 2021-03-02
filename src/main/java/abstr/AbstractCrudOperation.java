@@ -10,11 +10,11 @@ public interface AbstractCrudOperation <T> {
 
     T create (T t);
 
-    T read (Long id);
+    T read (Integer id);
 
     T update (T t);
 
-    void delete (Long id);
+    void delete (Integer id);
 
     List<T> getAll();
 
