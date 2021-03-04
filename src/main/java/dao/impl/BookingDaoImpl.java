@@ -4,12 +4,13 @@ import connect.ConnectionManager;
 import dao.BookingDao;
 import entity.Booking;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class BookingDaoImpl implements BookingDao {
     private static final String DELETE_BY_ID = "delete from booking where id = ?";
     private static final String READ_BY_ROOM = "select * from booking where room_id = ?";
     private static final String READ_BY_USER = "select * from booking where user_id = ?";
-    private static final String READ_BOOKED_DAYS_COUNT = "select hotel_id, count(booking.user_id) as reserve_count, " +
+    private static final String READ_BOOKED_COUNT = "select hotel_id, count(booking.user_id) as reserveRoomCount, " +
             "count(distinct room_id) as userCount from booking " +
             "inner join room r on booking.room_id = r.id " +
             "inner join hotel h on r.hotel_id = h.id " +
@@ -35,7 +36,7 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public Booking create(Booking booking) {
         try (PreparedStatement preparedStatement = ConnectionManager.getConnection()
-                .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)){
+                .prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setDate(1, booking.getDate());
             preparedStatement.setInt(2, booking.getRoomId());
             preparedStatement.setInt(3, booking.getUserId());
@@ -50,9 +51,9 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public Booking read(Integer id) {
         Booking booking = null;
-        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)){
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ID)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Integer bookingId = resultSet.getInt("id");
                 Date date = resultSet.getDate("date");
                 Integer roomdId = resultSet.getInt("room_id");
@@ -68,7 +69,7 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public Booking update(Booking booking) {
-        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(UPDATE_BY_ID)){
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(UPDATE_BY_ID)) {
             preparedStatement.setDate(1, booking.getDate());
             preparedStatement.setInt(2, booking.getRoomId());
             preparedStatement.setInt(3, booking.getUserId());
@@ -82,7 +83,7 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public void delete(Integer id) {
-        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)){
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(DELETE_BY_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             ConnectionManager.closeConnection();
@@ -94,15 +95,16 @@ public class BookingDaoImpl implements BookingDao {
     @Override
     public List<Booking> getAll() {
         List<Booking> bookingList = new ArrayList<>();
-        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)){
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Integer bookingId = resultSet.getInt("id");
                 Date date = resultSet.getDate("date");
                 Integer roomdId = resultSet.getInt("room_id");
                 Integer userId = resultSet.getInt("user_id");
                 bookingList.add(new Booking(bookingId, date, roomdId, userId));
             }
+            ConnectionManager.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -110,13 +112,43 @@ public class BookingDaoImpl implements BookingDao {
     }
 
     @Override
-    public List<Booking> getByRoom(Integer id) {
-        return null;
+    public List<Booking> getByRoom(Integer roomId) {
+        List<Booking> bookingList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_ROOM)) {
+            preparedStatement.setInt(1, roomId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer bookingId = resultSet.getInt("id");
+                Date date = resultSet.getDate("date");
+                Integer _roomdId = resultSet.getInt("room_id");
+                Integer userId = resultSet.getInt("user_id");
+                bookingList.add(new Booking(bookingId, date, _roomdId, userId));
+            }
+            ConnectionManager.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookingList;
     }
 
     @Override
-    public List<Booking> getByUser(Integer id) {
-        return null;
+    public List<Booking> getByUser(Integer userId) {
+        List<Booking> bookingList = new ArrayList<>();
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BY_USER)){
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Integer bookingId = resultSet.getInt("id");
+                Date date = resultSet.getDate("date");
+                Integer roomdId = resultSet.getInt("room_id");
+                Integer _userId = resultSet.getInt("user_id");
+                bookingList.add(new Booking(bookingId, date, roomdId, _userId));
+            }
+            ConnectionManager.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookingList;
     }
 
     @Override
@@ -126,6 +158,23 @@ public class BookingDaoImpl implements BookingDao {
 
     @Override
     public Map<String, List<Integer>> getAllBookedRoomsByHotel() {
-        return null;
+        Map<String, List<Integer>> bookedHotelCount = new HashMap<>();
+        try (PreparedStatement preparedStatement = ConnectionManager.getConnection().prepareStatement(READ_BOOKED_COUNT)){
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    String hotelName = resultSet.getString("name");
+                    Integer roomId = resultSet.getInt("reserveRoomCount");
+                    Integer userId = resultSet.getInt("userCount");
+                    List<Integer> roomAndUserCount = new ArrayList<>();
+                    roomAndUserCount.add(roomId);
+                    roomAndUserCount.add(userId);
+                    bookedHotelCount.put(hotelName, roomAndUserCount);
+                }
+            }
+            ConnectionManager.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bookedHotelCount;
     }
 }
