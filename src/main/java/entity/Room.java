@@ -13,7 +13,6 @@ import java.util.Objects;
  * @project travel_agency
  */
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Room {
