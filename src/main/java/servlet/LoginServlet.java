@@ -6,6 +6,7 @@ import entity.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +18,14 @@ import java.io.IOException;
  * @author yuriismac on 3/6/21.
  * @project travel_agency
  */
-@WebServlet("/login")
+@WebServlet("/login") // instead of webXml mapping
 public class LoginServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.userService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -27,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         User user = userService.getUserByEmail(email);
 
-        if (user != null & user.getPassword().equals(password)){
+        if (user != null && user.getPassword().equals(password)) {
             HttpSession httpSession = request.getSession(true);
             httpSession.setAttribute("userId", user.getId());
             httpSession.setAttribute("role", user.getRole());
