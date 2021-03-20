@@ -23,6 +23,6 @@ public class MainServlet extends HttpServlet {
         }else {
             req.setAttribute("userLogged", "yes");
         }
-        req.getRequestDispatcher("WEB-INF/pages/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/index.jsp").forward(req, resp);
     }
 }
