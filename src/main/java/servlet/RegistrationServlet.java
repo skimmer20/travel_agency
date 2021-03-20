@@ -1,5 +1,7 @@
 package servlet;
 
+import entity.User;
+import entity.enums.Role;
 import service.UserService;
 import service.impl.UserServiceImpl;
 
@@ -20,8 +22,24 @@ public class RegistrationServlet extends HttpServlet {
     private UserService userService = UserServiceImpl.userService();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/pages/registration.jsp").forward(req, resp);
+    }
 
-        super.doPost(req, resp);
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String email = req.getParameter("email");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String phoneNumber = req.getParameter("phoneNumber");
+        String password = req.getParameter("password");
+
+        if (!email.isEmpty() && !firstName.isEmpty() && !lastName.isEmpty()
+                && !phoneNumber.isEmpty() && !password.isEmpty()) {
+            userService.create(new User(firstName, lastName, Role.USER.toString(), phoneNumber, email, password));
+        }
+        resp.setContentType("text/plain");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write("Success");
     }
 }

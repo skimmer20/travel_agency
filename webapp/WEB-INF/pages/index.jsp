@@ -3,13 +3,19 @@
 <%@ page import="java.util.*, java.text.*" %>
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Index page</title>
 </head>
 <body>
-<a href="login.jsp">login</a>
-<a href="registration.jsp">registration</a>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> <a href="login">login</a> </h2>
+        <h2 class="inactive underlineHover"><a href="login">login</a> </h2>
+
+
+    </div>
+</div>
+<a href="login">login</a>
+<a href="registration">registration</a>
 </body>
 </html>
 
