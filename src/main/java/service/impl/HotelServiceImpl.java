@@ -17,7 +17,7 @@ public class HotelServiceImpl implements HotelService {
     private HotelDao hotelDao;
     private static HotelService hotelServiceImpl;
 
-    public static HotelService hotelService(){
+    public static HotelService getHotelService(){
         if (hotelServiceImpl == null){
             hotelServiceImpl = new HotelServiceImpl();
         }

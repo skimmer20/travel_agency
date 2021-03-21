@@ -24,6 +24,14 @@ public class Room {
     private double price;
     private Integer hotelId;
 
+    public Room(String roomType, boolean isWifi, boolean isBreakfast, double price, Integer hotelId) {
+        this.roomType = roomType;
+        this.isWifi = isWifi;
+        this.isBreakfast = isBreakfast;
+        this.price = price;
+        this.hotelId = hotelId;
+    }
+
     public Room(Integer id, String roomType, boolean isWifi, boolean isBreakfast, double price, Integer hotelId) {
         this.id = id;
         this.roomType = roomType;

@@ -27,6 +27,16 @@ public class Hotel {
     private int roomCount;
     private int agencyId;
 
+    public Hotel(String name, int rating, String country, String city, String propertyType, int roomCount, int agencyId) {
+        this.name = name;
+        this.rating = rating;
+        this.country = country;
+        this.city = city;
+        this.propertyType = propertyType;
+        this.roomCount = roomCount;
+        this.agencyId = agencyId;
+    }
+
     public Hotel(Integer id, String name, int rating, String country, String city, String propertyType, int roomCount) {
         this.id = id;
         this.name = name;

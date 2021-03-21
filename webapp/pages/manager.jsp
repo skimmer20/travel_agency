@@ -28,7 +28,7 @@
             </li>
             <li>
                 <a href="#"><span class="fa fa-hotel mr-3"></span>Add Hotels</a>
-                <a href="addHotel"><span class="fa fa-hotel mr-3"></span>Add Hotels</a>
+                <a href="add-hotel"><span class="fa fa-hotel mr-3"></span>Add Hotels</a>//??????????
             </li>
             <li>
                 <a href="#"><span class="fa fa-sticky-note mr-3"></span> Statistics</a>
