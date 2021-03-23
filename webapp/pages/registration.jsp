@@ -13,7 +13,7 @@
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/pages/css/main.css" rel="stylesheet" media="all">
 </head>
 <body>
 <div class="wrapper fadeInDown">

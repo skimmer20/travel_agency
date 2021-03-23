@@ -27,14 +27,17 @@ public class RoomServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("pages/rooms.jsp").forward(req, resp);
+        Integer hotelId = Integer.parseInt(req.getSession().getAttribute("hotel_id").toString());
+        Hotel hotel = hotelService.read(hotelId);
+        req.setAttribute("hotel", hotel);
+        req.getRequestDispatcher("pages/addRoom.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomType = req.getParameter("roomType");
-        boolean isWifi = req.getParameter("wifi").equals("true");
-        boolean breakfast = req.getParameter("breakfast").equals("true");
+        boolean isWifi = req.getParameter("wifi").equals("yes");
+        boolean breakfast = req.getParameter("breakfast").equals("yes");
         double price = Double.parseDouble(req.getParameter("price"));
 
         HttpSession session = req.getSession();

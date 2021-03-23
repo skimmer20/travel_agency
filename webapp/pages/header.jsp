@@ -25,6 +25,6 @@
                 <i></i>
                 <i></i>
                 <i></i>
-            </span>
+        </span>
     </div>
 </nav>

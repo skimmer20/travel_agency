@@ -5,22 +5,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
 /**
- * @author yuriismac on 3/18/21.
+ * @author yuriismac on 3/22/21.
  * @project travel_agency
  */
-@WebServlet("/index")
-public class MainServlet extends HttpServlet {
-
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer user_id = (Integer) req.getSession().getAttribute("userId");
-        if (user_id == null){
+        HttpSession session = req.getSession();
+        if (session != null) {
             req.setAttribute("userLogged", "no");
-        }else {
-            req.setAttribute("userLogged", "yes");
+            session.invalidate();
         }
-        req.getRequestDispatcher("pages/index.jsp").forward(req, resp);
+        resp.sendRedirect("index");
     }
 }

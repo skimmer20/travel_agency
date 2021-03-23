@@ -41,5 +41,6 @@ public class RegistrationServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write("Success");
+        resp.sendRedirect("index");
     }
 }

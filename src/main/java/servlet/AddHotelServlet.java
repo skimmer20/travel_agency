@@ -45,6 +45,6 @@ public class AddHotelServlet extends HttpServlet {
         }else {
             req.setAttribute("userLogged", "yes");
         }
-        resp.sendRedirect("add-hotel");
+        resp.sendRedirect("addRooms");
     }
 }

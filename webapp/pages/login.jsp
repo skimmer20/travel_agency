@@ -12,17 +12,17 @@
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" media="all">
+    <link href="${pageContext.request.contextPath}/pages/css/main.css" rel="stylesheet" media="all">
 </head>
 <body>
-<%--<c:choose>
-    <c:when test="${userLogged=='yes'}">
+<c:choose>
+    <c:when test="${userLogged =='yes'}">
         <jsp:include page="authheader.jsp"/>
     </c:when>
     <c:otherwise>
         <jsp:include page="header.jsp"/>
     </c:otherwise>
-</c:choose>--%>
+</c:choose>
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
@@ -32,7 +32,7 @@
         <!-- Login Form -->
         <form>
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
