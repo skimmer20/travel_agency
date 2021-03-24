@@ -47,7 +47,7 @@
                             <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"></path>
                         </svg>
                     </div>
-                    <input class="datepicker" id="depart" type="text" placeholder="Jun-05-2021" name="fromDate"/>
+                    <input class="datepicker" id="checkIn" type="text" placeholder="Jun-05-2021" name="fromDate"/>
                 </div>
                 <div class="input-field third-wrap">
                     <div class="icon-wrap">
@@ -55,7 +55,7 @@
                             <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"></path>
                         </svg>
                     </div>
-                    <input class="datepicker" id="return" type="text" placeholder="Jun-15-2021" name="toDate"/>
+                    <input class="datepicker" id="checkOut" type="text" placeholder="Jun-15-2021" name="toDate"/>
                 </div>
                 <div class="input-field fifth-wrap">
                     <button class="btn-search" type="submit">SEARCH</button>
